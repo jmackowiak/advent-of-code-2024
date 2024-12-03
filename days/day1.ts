@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 
 export async function day1(filePath: string) {
-  const data = readFileSync(filePath, 'utf8')
+  const data = await readFileSync(filePath, 'utf8')
     .trim()
     .split('\n')
     .map(line => line.split(/\s+/).map(Number))

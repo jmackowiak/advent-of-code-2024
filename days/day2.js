@@ -36,46 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.day1 = day1;
+exports.day2 = day2;
 var fs_1 = require("fs");
-function day1(filePath) {
+function day2(filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var data, firstArray, secondArray, sum, i, j, similarity;
+        var data, counter, _i, data_1, line, values, first, last, isAscending, j, diff;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, fs_1.readFileSync)(filePath, 'utf8')
-                        .trim()
-                        .split('\n')
-                        .map(function (line) { return line.split(/\s+/).map(Number); })];
-                case 1:
-                    data = _a.sent();
-                    firstArray = [];
-                    secondArray = [];
-                    sum = 0;
-                    data.forEach(function (_a) {
-                        var firstValue = _a[0], secondValue = _a[1];
-                        firstArray.push(firstValue);
-                        secondArray.push(secondValue);
-                    });
-                    // --- Part One ---
-                    // firstArray.sort()
-                    // secondArray.sort()
-                    // for (let i = 0; i < firstArray.length; i++) {
-                    //   sum += Math.abs(firstArray[i] - secondArray[i])
-                    // }
-                    // --- Part Two ---
-                    for (i = 0; i < firstArray.length; i++) {
-                        for (j = 0; j < secondArray.length; j++) {
-                            similarity = 0;
-                            if (firstArray[i] === secondArray[j]) {
-                                similarity++;
-                            }
-                            sum += firstArray[i] * similarity;
-                        }
+            data = (0, fs_1.readFileSync)(filePath, 'utf8').trim().split('\n');
+            counter = 0;
+            outer: for (_i = 0, data_1 = data; _i < data_1.length; _i++) {
+                line = data_1[_i];
+                values = line.split(' ').map(Number);
+                first = values[0];
+                last = values[values.length - 1];
+                isAscending = first < last;
+                for (j = 0; j < values.length - 1; j++) {
+                    diff = isAscending ? values[j + 1] - values[j] : values[j] - values[j + 1];
+                    if (diff > 3 || diff <= 0) {
+                        continue outer; // Pomijamy cały wiersz, jeśli różnica nie spełnia warunków
                     }
-                    console.log(sum);
-                    return [2 /*return*/];
+                }
+                counter++; // Zwiększamy licznik, jeśli żadna różnica nie przerwała pętli
             }
+            console.log('counter', counter);
+            return [2 /*return*/];
         });
     });
 }
